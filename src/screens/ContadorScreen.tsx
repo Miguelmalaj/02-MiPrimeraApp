@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import { Fab } from '../components/Fab';
 
 export const ContadorScreen = () => {
 
@@ -11,16 +12,28 @@ export const ContadorScreen = () => {
                     counter: { contador }
             </Text>
 
-            <TouchableOpacity
+            <Fab
+                title= "+1"
                 onPress={ () => setContador( contador + 1 ) }
+            />
+            
+            <Fab
+                title= "-1"
+                position='bl'
+                onPress={ () => setContador( contador - 1 ) }
+            />
+            
+            {/* <TouchableOpacity
+                style={ styles.fabLocationBL }
+                onPress={ () => setContador( contador - 1 ) }
             >
-                <View style={ styles.buttonIncrementar }>
-                    <Text>
-                        click
+                <View style={ styles.fab }>
+                    <Text style={ styles.fabText }>
+                        -1
                     </Text>
                 </View>
                 
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             
         </View>
     )
@@ -36,10 +49,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         top: -15 
     },
-    buttonIncrementar: {
-        backgroundColor: 'red',
-        borderRadius: 100
-    }
+    
 })
 
 
