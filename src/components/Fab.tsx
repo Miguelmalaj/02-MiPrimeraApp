@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableNativeFeedback, TouchableOpacity, View, Platform } from 'react-native'
 
 interface Props {
     title: string;
@@ -8,29 +8,54 @@ interface Props {
     onPress: () => void;
 }
 
-export const Fab = ({ title, onPress, position = 'br' }: Props) => { //(props: Props)
-    return (
-        <View
-            style={[ 
-                styles.fabLocation,
-                ( position === 'bl' ) ? styles.left : styles.right
-            ]}
-        >
-            <TouchableNativeFeedback
-                // onPress={ () => setContador( contador + 1 ) }
-                onPress={ onPress }
-                background={ TouchableNativeFeedback.Ripple('#28425B', false, 30) }
-            >
-                <View style={ styles.fab }>
-                    <Text style={ styles.fabText }>
-                        { title }
-                    </Text>
-                </View>
-            
-            </TouchableNativeFeedback>
 
-        </View>
-    )
+
+export const Fab = ({ title, onPress, position = 'br' }: Props) => { //(props: Props)
+   
+    const ios = () => {
+        return (
+            <TouchableOpacity
+                onPress={ onPress }
+                activeOpacity={ 0.8 }
+                style={[ 
+                    styles.fabLocation,
+                    ( position === 'bl' ) ? styles.left : styles.right
+                ]}
+            >
+                    <View style={ styles.fab }>
+                        <Text style={ styles.fabText }>
+                            { title }
+                        </Text>
+                    </View>
+
+            </TouchableOpacity>
+        )
+    }
+    
+    const android = () => {
+        return (<View
+                style={[ 
+                    styles.fabLocation,
+                    ( position === 'bl' ) ? styles.left : styles.right
+                ]}
+            >
+                <TouchableNativeFeedback
+                    // onPress={ () => setContador( contador + 1 ) }
+                    onPress={ onPress }
+                    background={ TouchableNativeFeedback.Ripple('#28425B', false, 30) }
+                >
+                    <View style={ styles.fab }>
+                        <Text style={ styles.fabText }>
+                            { title }
+                        </Text>
+                    </View>
+                
+                </TouchableNativeFeedback>
+    
+            </View>)
+    }
+   
+    return (Platform.OS === 'ios') ? ios() : android();
 }
 
 const styles = StyleSheet.create({
